@@ -39,4 +39,4 @@ jobs:
           app-name: 'A0KDurableFunctions'
           slot-name: 'Production'
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C88880EA301C4D7293FE7315B13F0FDC }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_79244ACA873C49E1B3FF7351800ACC8B }}
