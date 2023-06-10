@@ -7,12 +7,12 @@
         "excludedTypes": "Request"
       }
     }
-  },
+  }/*,
   "IsEncrypted": true,
   "Values": {
     "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=a0ksandboxblob;AccountKey=9nbpJBMVK1HDb15Y9TKLzirvAd+ModJ8+T+GjfIaAwVMg2RC71jUakoxaVSYPuHMir/NqaeYjy3t+ASthjdC5w==;EndpointSuffix=core.windows.net",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet"
-  }
+  }*/
 }
 
 
