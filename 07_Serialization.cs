@@ -9,10 +9,6 @@ using Microsoft.Extensions.Logging;
 
 namespace DurableFunctionsTricks
 {
-    public class Info
-    {
-        public string Name { get; set; }
-   }
     /// <summary>
     /// Use this to show the issue with internal properties due to serialization.
     /// </summary>
@@ -32,10 +28,8 @@ namespace DurableFunctionsTricks
                 Name = "Tokyo"
             };
 
-            var info2 = "Tokyo3";
-
             outputs.Add(await context.CallActivityAsync<string>(
-                nameof(SerializationSayHello), info2));
+                nameof(SerializationSayHello), info));
 
             return outputs;
         }
@@ -43,12 +37,12 @@ namespace DurableFunctionsTricks
         [FunctionName(nameof(SerializationSayHello))]
         public static string SerializationSayHello(
             [ActivityTrigger]
-            string info,
+            Info info,
             ILogger log)
         {
-            //log.LogDebug($"Saying hello to {info.Name}."); 
-            //return $"HELLO {info.Name}!";
-            return $"Hello there! - {info}";
+            log.LogDebug($"Saying hello to {info.Name}."); 
+            return $"HELLO {info.Name}!";
+            
             
 
         }
@@ -68,6 +62,10 @@ namespace DurableFunctionsTricks
             log.LogInformation($"Started orchestration with ID = '{instanceId}'.");
 
             return starter.CreateCheckStatusResponse(req, instanceId);
+        }
+        public class Info
+        {
+            public string Name { get; set; }
         }
     }
 }

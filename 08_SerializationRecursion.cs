@@ -23,15 +23,19 @@ namespace DurableFunctionsTricks
 
             // Serial calls
 
-            var series = new LearnLiveSeries();
+            LearnLiveSeries series = new LearnLiveSeries();
 
-            series.Modules = new List<LearnLiveModule>
-            {
-                new LearnLiveModule("First module")
-                {
-                    Parent = series
-                }
-            };
+            series.Modules = new List<LearnLiveModule>();
+            LearnLiveModule module = new LearnLiveModule("First module") { Parent = null };
+            series.Modules.Add(module);
+
+            //string strSeries = JsonSerializer.Serialize(series);
+
+            //string output = await context.CallActivityAsync<string>(
+            //    nameof(SerializationRecursionSayHello),
+            //    strSeries);
+            
+            //outputs.Add(output);
 
             outputs.Add(await context.CallActivityAsync<string>(
                 nameof(SerializationRecursionSayHello), 
@@ -47,6 +51,8 @@ namespace DurableFunctionsTricks
             ILogger log)
         {
             // DO WORK
+
+            //LearnLiveSeries series = JsonSerializer.Deserialize<LearnLiveSeries>(strSeries);
 
             var result = $"Found {series.Modules.Count} modules";
             log.LogInformation(result);
