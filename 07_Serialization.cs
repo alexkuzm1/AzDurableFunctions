@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
@@ -8,6 +9,10 @@ using Microsoft.Extensions.Logging;
 
 namespace DurableFunctionsTricks
 {
+    public class Info
+    {
+        public string Name { get; set; }
+   }
     /// <summary>
     /// Use this to show the issue with internal properties due to serialization.
     /// </summary>
@@ -27,9 +32,10 @@ namespace DurableFunctionsTricks
                 Name = "Tokyo"
             };
 
+            var info2 = "Tokyo3";
+
             outputs.Add(await context.CallActivityAsync<string>(
-                nameof(SerializationSayHello), 
-                info));
+                nameof(SerializationSayHello), info2));
 
             return outputs;
         }
@@ -37,11 +43,14 @@ namespace DurableFunctionsTricks
         [FunctionName(nameof(SerializationSayHello))]
         public static string SerializationSayHello(
             [ActivityTrigger]
-            Info info,
+            string info,
             ILogger log)
         {
-            log.LogDebug($"Saying hello to {info.Name}."); 
-            return $"HELLO {info.Name.ToUpper()}!";
+            //log.LogDebug($"Saying hello to {info.Name}."); 
+            //return $"HELLO {info.Name}!";
+            return $"Hello there! - {info}";
+            
+
         }
 
         [FunctionName(nameof(SerializationHttpStart))]
@@ -60,10 +69,5 @@ namespace DurableFunctionsTricks
 
             return starter.CreateCheckStatusResponse(req, instanceId);
         }
-    }
-
-    public class Info
-    {
-        public string Name { get; internal set; }
     }
 }
